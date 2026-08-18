@@ -1,270 +1,191 @@
 <!DOCTYPE html>
-<html lang="fr" dir="ltr">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registre National de l'Artisanat - RNA</title>
+    <title>RNA - Ministère du Tourisme, de l'Artisanat</title>
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-family: Arial, Helvetica, sans-serif;
         }
 
         body {
-            /* خلفية متدرجة بيج/ذهبية دافئة تماماً مثل الصورة */
-            background: linear-gradient(135deg, #e5e3d3 0%, #c8c5a8 100%);
+            background-color: #cbceb2;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             padding: 20px;
-            color: #4a4a4a;
         }
 
-        /* الهيدر العلوي */
-        .top-header {
+        /* Top Header Navigation */
+        .top-bar {
             width: 100%;
             max-width: 1200px;
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
-            position: relative;
+            margin-bottom: 20px;
         }
 
-        /* زر العودة للرئيسية */
         .btn-back {
+            background: white;
+            border: 1px solid #ccc;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #333;
+            text-decoration: none;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            background: #ffffff;
-            border: 1px solid #d9d9d9;
-            border-radius: 20px;
-            padding: 6px 18px;
-            font-size: 14px;
-            color: #555;
-            cursor: pointer;
-            text-decoration: none;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            justify-self: start;
+            gap: 5px;
         }
 
-        /* الجزء الأوسط من الهيدر (العنوان والشعار) */
         .header-center {
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 25px;
+            gap: 20px;
             text-align: center;
         }
 
-        .header-text-fr {
-            text-align: right;
+        .header-title {
             font-size: 13px;
+            color: #2b2b2b;
+            font-weight: bold;
             line-height: 1.4;
-            color: #333;
-            font-weight: 500;
         }
 
-        .header-text-ar {
-            text-align: left;
-            font-size: 14px;
-            line-height: 1.4;
-            color: #333;
-            font-weight: 500;
+        .coat-of-arms {
+            height: 60px;
         }
 
-        .logo-coat {
-            width: 75px;
-            height: auto;
+        .lang-select {
+            background: white;
+            border: 1px solid #ccc;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
         }
 
-        /* قائمة اختيار اللغة */
-        .lang-selector {
-            justify-self: end;
-            position: relative;
-        }
-
-        .lang-btn {
-            background: #fff;
-            border: 1px solid #d9d9d9;
-            border-radius: 16px;
-            padding: 4px 16px;
-            font-size: 13px;
-            color: #666;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .lang-dropdown {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: #fff;
-            border: 1px solid #e8e8e8;
-            border-radius: 4px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            margin-top: 4px;
-            width: 100%;
-            overflow: hidden;
-        }
-
-        .lang-option {
-            padding: 6px 12px;
-            font-size: 13px;
-            color: #555;
-            cursor: pointer;
-        }
-
-        .lang-option.active {
-            background-color: #d2dbcc;
-        }
-
-        /* البطاقة الرئيسية */
+        /* Modal / Card Container */
         .card-container {
+            background: #ffffff;
             width: 100%;
-            max-width: 820px;
-            background: rgba(255, 255, 255, 0.92);
+            max-width: 720px;
             border-radius: 20px;
-            padding: 35px 40px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
-            backdrop-filter: blur(8px);
+            padding: 40px 45px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            margin-top: 10px;
         }
 
         .info-row {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
+            align-items: flex-start;
+            margin-bottom: 22px;
+            line-height: 1.4;
         }
 
-        .label {
-            font-size: 16px;
+        .info-label {
             color: #4a4a4a;
-            font-weight: 500;
+            font-size: 18px;
+            font-weight: 600;
             width: 45%;
         }
 
-        .value {
-            font-size: 16px;
-            color: #333333;
-            font-weight: 600;
-            width: 55%;
-            text-align: left;
+        .info-value {
+            color: #2b2b2b;
+            font-size: 18px;
+            font-weight: 700;
+            width: 50%;
+            word-break: break-word;
         }
 
-        /* التجاوب مع الشاشات الصغيرة */
-        @media (max-width: 850px) {
-            .top-header {
-                display: flex;
-                flex-direction: column;
-                gap: 15px;
-            }
-            .header-center {
-                flex-direction: column;
-                gap: 10px;
-            }
-            .header-text-fr, .header-text-ar {
-                text-align: center;
-            }
-            .info-row {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 4px;
-            }
-            .label, .value {
-                width: 100%;
-            }
-            .value {
-                text-align: left;
-                margin-bottom: 8px;
-            }
+        .info-value.arabic, .info-label.arabic {
+            direction: rtl;
         }
     </style>
 </head>
 <body>
 
-    <!-- Upper Header Controls -->
-    <header class="top-header">
-        <a href="#" class="btn-back">
-            <span>&larr;</span> Retour au site
-        </a>
+    <!-- Header Section -->
+    <header class="top-bar">
+        <a href="#" class="btn-back">&larr; Retour au site</a>
 
         <div class="header-center">
-            <div class="header-text-fr">
-                <p>Royaume du Maroc</p>
-                <p>Ministère du Tourisme, de l'Artisanat</p>
-                <p>et de l'Economie Sociale et Solidaire</p>
+            <div class="header-title">
+                Royaume du Maroc<br>
+                Ministère du Tourisme, de l'Artisanat<br>
+                et de l'Economie Sociale et Solidaire
             </div>
-            
-            <!-- الشعار الرسمي للمملكة المغربية -->
-            <img class="logo-coat" src="https://upload.wikimedia.org/wikipedia/commons/d/d1/Coat_of_arms_of_Morocco.svg" alt="Coat of Arms Morocco">
-            
-            <div class="header-text-ar">
-                <p>المملكة المغربية</p>
-                <p>وزارة السياحة والصناعة التقليدية</p>
-                <p>والاقتصاد الاجتماعي والتضامني</p>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/d/d1/Coat_of_arms_of_Morocco.svg" alt="Coat of Arms" class="coat-of-arms">
+            <div class="header-title arabic" dir="rtl">
+                المملكة المغربية<br>
+                وزارة السياحة والصناعة التقليدية<br>
+                والاقتصاد الاجتماعي والتضامني
             </div>
         </div>
 
-        <div class="lang-selector">
-            <button class="lang-btn">FR <span>&#2157;</span></button>
-            <div class="lang-dropdown">
-                <div class="lang-option active">FR</div>
-                <div class="lang-option">AR</div>
-            </div>
-        </div>
+        <select class="lang-select">
+            <option>FR</option>
+            <option>AR</option>
+        </select>
     </header>
 
-    <!-- Content Card -->
+    <!-- Main Content Card -->
     <main class="card-container">
         <div class="info-row">
-            <div class="label">Numéro d'inscription RNA :</div>
-            <div class="value">000104520100357514</div>
+            <span class="info-label">Numéro d'inscription RNA :</span>
+            <span class="info-value">000104520100357514</span>
         </div>
 
         <div class="info-row">
-            <div class="label">Type d'artisant :</div>
-            <div class="value">Artisan avec expérience</div>
+            <span class="info-label">Type d'artisant :</span>
+            <span class="info-value">Artisan avec expérience</span>
         </div>
 
         <div class="info-row">
-            <div class="label">Nom (en francais) :</div>
-            <div class="value">HARCHAOUI</div>
+            <span class="info-label">Nom (en francais) :</span>
+            <span class="info-value">HARCHAOUI</span>
         </div>
 
         <div class="info-row">
-            <div class="label">Prénom (en francais) :</div>
-            <div class="value">DRISS</div>
+            <span class="info-label">Prénom (en francais) :</span>
+            <span class="info-value">DRISS</span>
         </div>
 
         <div class="info-row">
-            <div class="label">Nom (en arabe) :</div>
-            <div class="value">الهرشاوي</div>
+            <span class="info-label">Nom (en arabe) :</span>
+            <span class="info-value arabic">الحرشاوي</span>
         </div>
 
         <div class="info-row">
-            <div class="label">Prénom (en arabe) :</div>
-            <div class="value">ادريس</div>
+            <span class="info-label">Prénom (en arabe) :</span>
+            <span class="info-value arabic">ادريس</span>
         </div>
 
         <div class="info-row">
-            <div class="label">Adresse personnelle (en francais) :</div>
-            <div class="value">DOUAR IBOUJDADEN BENI OUKIL NADOR</div>
+            <span class="info-label">Adresse personnelle (en francais) :</span>
+            <span class="info-value">DOUAR IBOUJDADEN BENI OUKIL NADOR</span>
         </div>
 
         <div class="info-row">
-            <div class="label">Commune (en francais) :</div>
-            <div class="value">BNI OUKIL OULAD M'HAND</div>
+            <span class="info-label">Commune (en francais) :</span>
+            <span class="info-value">BNI OUKIL OULAD M'HAND</span>
         </div>
 
         <div class="info-row">
-            <div class="label">Adresse personnelle (en arabe) :</div>
-            <div class="value">دوار ابوجضاضا بني وكيل الناظور</div>
+            <span class="info-label">Adresse personnelle (en arabe) :</span>
+            <span class="info-value arabic">دوار ابوجضاضا بني وكيل الناظور</span>
+        </div>
+
+        <div class="info-row">
+            <span class="info-label">Commune (en arabe) :</span>
+            <span class="info-value arabic">بني وكيل اولاد محاند</span>
         </div>
     </main>
 
